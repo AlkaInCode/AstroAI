@@ -22,7 +22,9 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 **Numerology** (parallel track) is also built and verified: Life Path, Expression, Soul Urge, Personality and Chaldean Destiny numbers computed deterministically from name and birth date (`backend/app/numerology/calculations.py`, correctly preserving Master Numbers 11/22/33), persisted per profile, shown as dashboard cards, and grounding the AI chat.
 
-**My Clients** (parallel track) is also built and verified: an account can hold multiple birth profiles (e.g. family members), with a searchable list, inline name editing, and delete (`frontend/src/pages/Clients.jsx` + profile PATCH/DELETE endpoints) — `/dashboard` now goes straight to the one Kundli for single-profile accounts, or to the clients list once there's more than one. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
+**My Clients** (parallel track) is also built and verified: an account can hold multiple birth profiles (e.g. family members), with a searchable list, inline name editing, and delete (`frontend/src/pages/Clients.jsx` + profile PATCH/DELETE endpoints) — `/dashboard` now goes straight to the one Kundli for single-profile accounts, or to the clients list once there's more than one.
+
+**Bring-your-own-key AI settings** is also built and verified: any user can save their own LLM API key (Anthropic, OpenAI, Google Gemini or DeepSeek) at `/settings`, encrypted at rest (`backend/app/services/encryption.py`) and never returned to the frontend after saving. Chat prefers a user's own key over the server-wide fallback (`LLM_API_KEY` in `.env`), falling back to the placeholder echo if neither is set. The astrology calculation API (Prokerala) is a separate, still-not-wired-in concern — see the docs below for the full plan.
 
 ## Where to Start
 

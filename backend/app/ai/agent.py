@@ -16,9 +16,12 @@ from app.ai.prompts import SYSTEM_PROMPT, build_user_context_block
 from app.ai.rag import search_astrology_knowledge, search_numerology_knowledge
 from app.ai.tools import get_chart, get_dasha, get_numerology, get_profile, get_transits, get_yogas
 from app.models.conversation import Conversation
+from app.models.user import User
 
 
-def answer_question(db: Session, birth_profile_id: uuid.UUID, session_id: uuid.UUID, question: str) -> str:
+def answer_question(
+    db: Session, birth_profile_id: uuid.UUID, session_id: uuid.UUID, question: str, current_user: User
+) -> str:
     profile = get_profile(db, birth_profile_id)
     chart = get_chart(db, birth_profile_id)
     dasha = get_dasha(db, birth_profile_id)
@@ -28,7 +31,7 @@ def answer_question(db: Session, birth_profile_id: uuid.UUID, session_id: uuid.U
     knowledge = search_astrology_knowledge(question) + search_numerology_knowledge(question)
 
     context_block = build_user_context_block(profile, chart, knowledge, dasha, yogas, transits, numerology)
-    llm = get_llm_client()
+    llm = get_llm_client(current_user)
     reply = llm.complete(system_prompt=SYSTEM_PROMPT, user_message=f"{context_block}\nCustomer question: {question}")
 
     db.add(Conversation(birth_profile_id=birth_profile_id, session_id=session_id, role="user", message=question))

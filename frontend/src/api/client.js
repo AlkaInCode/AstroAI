@@ -56,6 +56,10 @@ export const api = {
   sendChatMessage: (birthProfileId, message, sessionId) =>
     request("/chat", { method: "POST", body: { birth_profile_id: birthProfileId, message, session_id: sessionId } }),
   getChatHistory: (profileId) => request(`/chat/${profileId}/history`),
+
+  getLLMSettings: () => request("/settings/llm"),
+  updateLLMSettings: (payload) => request("/settings/llm", { method: "PUT", body: payload }),
+  clearLLMSettings: () => request("/settings/llm", { method: "DELETE" }),
 };
 
 export function saveToken(token) {

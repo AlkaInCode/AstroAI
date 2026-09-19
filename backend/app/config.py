@@ -10,6 +10,11 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 1440
 
+    # Encrypts user-supplied LLM API keys at rest (app.services.encryption). Any
+    # string works -- it's hashed into a valid Fernet key -- but MUST be changed
+    # and kept stable in production (rotating it makes existing stored keys undecryptable).
+    encryption_key: str = "dev-encryption-key-change-me"
+
     astrology_provider: str = "mock"
     prokerala_client_id: str = ""
     prokerala_client_secret: str = ""

@@ -25,6 +25,9 @@ export default function Navbar() {
               <Link to="/clients" className="text-brand-slate/80 hover:text-brand-slate">
                 My Clients
               </Link>
+              <Link to="/settings" className="text-brand-slate/80 hover:text-brand-slate">
+                Settings
+              </Link>
               <button
                 onClick={handleLogout}
                 className="rounded-full bg-brand-pink px-4 py-2 text-brand-slate shadow-sm transition hover:shadow-md"

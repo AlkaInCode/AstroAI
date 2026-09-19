@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, chat, charts, dasha, numerology, profiles, transits, vargas, yogas
+from app.api import auth, chat, charts, dasha, llm_settings, numerology, profiles, transits, vargas, yogas
 
 app = FastAPI(title="AstroAI API", version="0.1.0")
 
@@ -21,6 +21,7 @@ app.include_router(yogas.router)
 app.include_router(vargas.router)
 app.include_router(transits.router)
 app.include_router(numerology.router)
+app.include_router(llm_settings.router)
 app.include_router(chat.router)
 
 

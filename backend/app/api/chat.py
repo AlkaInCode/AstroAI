@@ -22,7 +22,7 @@ def send_message(
     get_owned_profile(db, payload.birth_profile_id, current_user)
 
     session_id = payload.session_id or uuid.uuid4()
-    reply = answer_question(db, payload.birth_profile_id, session_id, payload.message)
+    reply = answer_question(db, payload.birth_profile_id, session_id, payload.message, current_user)
     return ChatResponse(session_id=session_id, reply=reply)
 
 
