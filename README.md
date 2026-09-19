@@ -6,26 +6,34 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 ## Project Status
 
-Planning phase. No application code yet — see the docs below for the full plan before any implementation begins.
+Phase 1 MVP scaffolding is built and verified end-to-end: signup, login, birth profile intake, chart generation (mock provider), the Kundli dashboard, and the AI chat all work against a real local PostgreSQL database. See the docs below for the full plan.
 
 ## Where to Start
 
 - [`planning/PROJECT_PLAN.md`](planning/PROJECT_PLAN.md) — plain-language summary of what we're building, why, and what's decided so far.
 - [`docs/PRD.md`](docs/PRD.md) — full product requirements document (architecture, data model, tech stack, phased roadmap).
+- [`backend/README.md`](backend/README.md) — backend setup.
+- [`frontend/README.md`](frontend/README.md) — frontend setup.
 
-## Planned Stack
+## Stack
 
 - **Frontend:** React + Vite + Tailwind CSS
 - **Backend:** Python + FastAPI + SQLAlchemy + Pydantic
-- **Database:** PostgreSQL + pgvector
-- **Astrology calculation:** external API (primary: Prokerala, abstracted behind an internal interface)
+- **Database:** PostgreSQL (native Windows install, no Docker)
+- **Astrology calculation:** external API, abstracted behind an internal interface — mock provider for local dev, Prokerala integration ready for real credentials
 - **AI:** LLM + tool-calling + RAG, backend-only
+
+## Running Locally
+
+1. PostgreSQL running as a Windows service, with the `astroai` database/user created (see `backend/README.md`).
+2. Backend: `cd backend`, create a venv, `pip install -r requirements.txt`, copy `.env.example` to `.env`, `alembic upgrade head`, then `uvicorn app.main:app --reload`.
+3. Frontend: `cd frontend`, `npm install`, `npm run dev`.
 
 ## Repository Layout
 
 ```
-backend/    # FastAPI backend (to be built)
-frontend/   # React frontend (to be built)
+backend/    # FastAPI backend
+frontend/   # React frontend
 docs/       # Detailed PRD
 planning/   # Running plain-language project plan
 ```

@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sky-cream: #f4f9ff;
+  --color-brand-blue: #cfe8ff;
+  --color-brand-blue-deep: #8fc6f0;
+  --color-brand-pink: #ffd9e8;
+  --color-brand-lavender: #e6dcff;
+  --color-brand-slate: #4a5568;
+
+  --font-sans: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: var(--color-sky-cream);
+  color: var(--color-brand-slate);
+}
