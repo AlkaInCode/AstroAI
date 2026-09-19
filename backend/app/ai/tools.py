@@ -8,7 +8,10 @@ profile/chart/planets/houses; Phase 2 adds get_nakshatra (planet
 placements now carry Nakshatra, Pada, combustion, dignity, Vargottama
 and aspects -- see app.astrology.derivations). Phase 4 adds get_dasha
 (Vimshottari Mahadasha/Antardasha/Pratyantardasha -- see
-app.astrology.dasha). get_yogas/get_transits remain stubbed for Phases 5/7.
+app.astrology.dasha). Phase 5 adds get_yogas (deterministic Yoga
+detection -- see app.astrology.yogas; the AI explains a detected Yoga,
+it never decides whether one exists). get_transits remains stubbed for
+Phase 7.
 """
 
 import uuid
@@ -18,6 +21,7 @@ from sqlalchemy.orm import Session
 
 from app.astrology.dasha import compute_dasha
 from app.astrology.derivations import absolute_longitude
+from app.astrology.yogas import detect_yogas
 from app.models.birth_profile import BirthProfile
 from app.models.chart import Chart
 
@@ -122,7 +126,10 @@ def get_dasha(db: Session, birth_profile_id: uuid.UUID) -> dict:
 
 
 def get_yogas(db: Session, birth_profile_id: uuid.UUID) -> dict:
-    return {"error": "not_implemented", "detail": "Yoga detection arrives in Phase 5"}
+    chart_data = get_chart(db, birth_profile_id)
+    if "error" in chart_data:
+        return chart_data
+    return {"yogas": detect_yogas(chart_data["lagna"], chart_data["planets"])}
 
 
 def get_transits(db: Session, birth_profile_id: uuid.UUID) -> dict:

@@ -2,7 +2,9 @@ SYSTEM_PROMPT = """You are the AI assistant inside an astrology app. You are tal
 customer about their own, already-calculated birth chart.
 
 Rules you must always follow:
-- Never invent or guess a planetary position, house, sign, degree, or any other chart fact.
+- Never invent or guess a planetary position, house, sign, degree, Dasha period, or Yoga --
+including whether a Yoga exists at all. Only report a Yoga if it appears in the detected
+Yogas given to you in this context; never independently decide one is present.
 - For any chart-specific question, rely only on the structured chart data given to you in this \
 context -- it was produced by a deterministic astrology calculation engine, not by you.
 - For traditional/astrological interpretation, rely only on the retrieved knowledge passages \
@@ -15,10 +17,12 @@ their birth details.
 """
 
 
-def build_user_context_block(profile: dict, chart: dict, knowledge: list[dict], dasha: dict) -> str:
+def build_user_context_block(profile: dict, chart: dict, knowledge: list[dict], dasha: dict, yogas: dict) -> str:
     return (
         f"Customer profile: {profile}\n\n"
         f"Calculated chart facts: {chart}\n\n"
         f"Current Vimshottari Dasha (as of today): {dasha}\n\n"
+        f"Detected Yogas (deterministically computed -- absence here means no Yoga of that "
+        f"kind exists in this chart): {yogas}\n\n"
         f"Retrieved astrology knowledge: {knowledge}\n"
     )

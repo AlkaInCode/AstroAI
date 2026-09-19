@@ -7,6 +7,7 @@ import KundliChart from "../components/KundliChart";
 import PlanetTable from "../components/PlanetTable";
 import LifeAreaCards from "../components/LifeAreaCards";
 import DashaTimeline from "../components/DashaTimeline";
+import YogaCard from "../components/YogaCard";
 import AIChat from "../components/AIChat";
 
 export default function Dashboard() {
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const [profile, setProfile] = useState(null);
   const [chart, setChart] = useState(null);
   const [dasha, setDasha] = useState(null);
+  const [yogas, setYogas] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,12 +24,13 @@ export default function Dashboard() {
     setIsLoading(true);
     setError("");
 
-    Promise.all([api.getProfile(profileId), api.getChart(profileId), api.getDasha(profileId)])
-      .then(([profileData, chartData, dashaData]) => {
+    Promise.all([api.getProfile(profileId), api.getChart(profileId), api.getDasha(profileId), api.getYogas(profileId)])
+      .then(([profileData, chartData, dashaData, yogasData]) => {
         if (cancelled) return;
         setProfile(profileData);
         setChart({ ...chartData, planets: chartData.planetary_data.planets });
         setDasha(dashaData);
+        setYogas(yogasData.yogas);
       })
       .catch((err) => {
         if (!cancelled) setError(err.message || "Could not load this Kundli.");
@@ -89,6 +92,21 @@ export default function Dashboard() {
 
       <div className="mt-6">
         <DashaTimeline dasha={dasha} />
+      </div>
+
+      <div className="mt-6">
+        <h2 className="mb-4 px-1 font-semibold text-brand-slate">Yogas</h2>
+        {yogas.length > 0 ? (
+          <div className="grid gap-4 sm:grid-cols-2">
+            {yogas.map((yoga) => (
+              <YogaCard key={yoga.name + yoga.planets.join("")} yoga={yoga} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl bg-white/70 p-5 text-sm text-brand-slate/60 shadow-sm">
+            No classical Yogas from our current detection set were found in this chart.
+          </div>
+        )}
       </div>
 
       <div className="mt-6">

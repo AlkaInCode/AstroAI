@@ -169,6 +169,97 @@ _PLACEHOLDER_KNOWLEDGE = [
         ),
         "source": "Placeholder Phase-4 knowledge note",
     },
+    {
+        "topic": "Ruchaka Yoga",
+        "content": (
+            "Ruchaka Yoga forms when Mars is in its own sign or exalted while placed in "
+            "a kendra (angular house). It is one of the five Pancha Mahapurusha Yogas, "
+            "traditionally associated with courage, physical strength and leadership."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Bhadra Yoga",
+        "content": (
+            "Bhadra Yoga forms when Mercury is in its own sign or exalted while placed in "
+            "a kendra (angular house). It is one of the five Pancha Mahapurusha Yogas, "
+            "traditionally associated with sharp intellect and communication skill."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Hamsa Yoga",
+        "content": (
+            "Hamsa Yoga forms when Jupiter is in its own sign or exalted while placed in "
+            "a kendra (angular house). It is one of the five Pancha Mahapurusha Yogas, "
+            "traditionally associated with wisdom, ethics and respect from others."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Malavya Yoga",
+        "content": (
+            "Malavya Yoga forms when Venus is in its own sign or exalted while placed in "
+            "a kendra (angular house). It is one of the five Pancha Mahapurusha Yogas, "
+            "traditionally associated with charm, comfort and artistic sensibility."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Sasa Yoga",
+        "content": (
+            "Sasa Yoga forms when Saturn is in its own sign or exalted while placed in "
+            "a kendra (angular house). It is one of the five Pancha Mahapurusha Yogas, "
+            "traditionally associated with discipline, authority and enduring achievement."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Gajakesari Yoga",
+        "content": (
+            "Gajakesari Yoga forms when Jupiter is positioned in a kendra (1st, 4th, 7th "
+            "or 10th house) counted from the Moon. It is traditionally considered to bring "
+            "intelligence, good reputation and general good fortune."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Budhaditya Yoga",
+        "content": (
+            "Budhaditya Yoga forms when the Sun and Mercury are conjunct in the same "
+            "house. It is traditionally associated with sharp intellect, analytical "
+            "ability and success through communication or scholarship."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Chandra-Mangal Yoga",
+        "content": (
+            "Chandra-Mangal Yoga forms when the Moon and Mars are conjunct in the same "
+            "house. It is traditionally read as a wealth-producing combination, though "
+            "one that can also bring emotional intensity."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Raja Yoga",
+        "content": (
+            "A Raja Yoga classically forms when the lord of a kendra (angular) house and "
+            "the lord of a trikona (trinal) house join together -- by conjunction, mutual "
+            "aspect, or sign exchange. It is considered one of the most auspicious "
+            "combinations, traditionally linked to status, authority and success."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
+    {
+        "topic": "Dhana Yoga",
+        "content": (
+            "A Dhana Yoga (wealth combination) classically forms when the lords of the "
+            "wealth houses -- most commonly the 2nd (accumulated wealth) and 11th "
+            "(gains) -- join together, indicating a capacity for financial prosperity."
+        ),
+        "source": "Placeholder Phase-5 knowledge note",
+    },
 ]
 
 

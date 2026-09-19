@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from app.ai.llm import get_llm_client
 from app.ai.prompts import SYSTEM_PROMPT, build_user_context_block
 from app.ai.rag import search_astrology_knowledge
-from app.ai.tools import get_chart, get_dasha, get_profile
+from app.ai.tools import get_chart, get_dasha, get_profile, get_yogas
 from app.models.conversation import Conversation
 
 
@@ -22,9 +22,10 @@ def answer_question(db: Session, birth_profile_id: uuid.UUID, session_id: uuid.U
     profile = get_profile(db, birth_profile_id)
     chart = get_chart(db, birth_profile_id)
     dasha = get_dasha(db, birth_profile_id)
+    yogas = get_yogas(db, birth_profile_id)
     knowledge = search_astrology_knowledge(question)
 
-    context_block = build_user_context_block(profile, chart, knowledge, dasha)
+    context_block = build_user_context_block(profile, chart, knowledge, dasha, yogas)
     llm = get_llm_client()
     reply = llm.complete(system_prompt=SYSTEM_PROMPT, user_message=f"{context_block}\nCustomer question: {question}")
 
