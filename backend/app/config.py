@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    database_url: str = "postgresql+psycopg2://astroai:astroai@localhost:5432/astroai"
+    database_url: str = "postgresql+psycopg://astroai:astroai@localhost:5432/astroai"
 
     jwt_secret_key: str = "dev-secret-change-me"
     jwt_algorithm: str = "HS256"
