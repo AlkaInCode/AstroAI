@@ -8,10 +8,12 @@ current API docs before this goes live -- this class is the single place
 that mapping lives, so the rest of the app is unaffected by that work.
 """
 
+from datetime import date
+
 import httpx
 
 from app.astrology.derivations import absolute_longitude, enrich_planet
-from app.astrology.provider import AstrologyProvider, BirthInput, ChartResult, PlanetPlacement
+from app.astrology.provider import AstrologyProvider, BirthInput, ChartResult, PlanetPlacement, TransitPosition
 from app.config import settings
 
 _TOKEN_URL = "https://api.prokerala.com/token"
@@ -86,6 +88,14 @@ class ProkeralaAstrologyProvider(AstrologyProvider):
             planets=planets,
             raw_response=payload,
         )
+
+
+    def calculate_transits(self, as_of: date) -> list[TransitPosition]:
+        # TODO: confirm Prokerala's actual transit/current-positions endpoint and response
+        # shape against their live docs once credentials exist -- this is unimplemented
+        # until then; app.astrology.transits only ever receives what a real provider
+        # returns here, never invented data.
+        raise NotImplementedError("Prokerala transit endpoint not yet confirmed against live docs")
 
 
 def _tz_offset(timezone_name: str) -> str:

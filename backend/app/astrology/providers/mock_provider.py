@@ -9,10 +9,31 @@ from those (Nakshatra, combustion, dignity, Vargottama, aspects) uses the
 same real rule engine every provider shares -- see app.astrology.derivations.
 """
 
+import math
+from datetime import date
+
 from app.astrology.derivations import SIGNS, absolute_longitude, enrich_planet
-from app.astrology.provider import AstrologyProvider, BirthInput, ChartResult, PlanetPlacement
+from app.astrology.provider import AstrologyProvider, BirthInput, ChartResult, PlanetPlacement, TransitPosition
 
 _PLANETS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+
+# Rough real-world average days-per-sign, used only to make the mock transit
+# feed change at a plausible relative pace (Moon fastest, Saturn slowest) --
+# not a real ephemeris. Rahu/Ketu move backward through the zodiac.
+_TRANSIT_DAYS_PER_SIGN = {
+    "Sun": 30.44,
+    "Moon": 2.28,
+    "Mars": 45,
+    "Mercury": 15,
+    "Jupiter": 361,
+    "Venus": 25,
+    "Saturn": 900,
+    "Rahu": 547,
+    "Ketu": 547,
+}
+_TRANSIT_START_OFFSET = {"Sun": 0, "Moon": 2, "Mars": 8, "Mercury": 4, "Jupiter": 10, "Venus": 6, "Saturn": 1, "Rahu": 3, "Ketu": 9}
+_RETROGRADE_NODES = {"Rahu", "Ketu"}
+_TRANSIT_EPOCH = date(2000, 1, 1).toordinal()
 
 
 class MockAstrologyProvider(AstrologyProvider):
@@ -56,3 +77,25 @@ class MockAstrologyProvider(AstrologyProvider):
             planets=planets,
             raw_response={"provider": "mock", "seed": seed},
         )
+
+    def calculate_transits(self, as_of: date) -> list[TransitPosition]:
+        days_elapsed = as_of.toordinal() - _TRANSIT_EPOCH
+
+        positions = []
+        for planet in _PLANETS:
+            is_retrograde = planet in _RETROGRADE_NODES
+            direction = -1 if is_retrograde else 1
+            position = _TRANSIT_START_OFFSET[planet] + direction * days_elapsed / _TRANSIT_DAYS_PER_SIGN[planet]
+
+            sign_offset = math.floor(position)
+            degree_fraction = position - sign_offset  # always in [0, 1), regardless of direction
+
+            positions.append(
+                TransitPosition(
+                    name=planet,
+                    sign=SIGNS[sign_offset % 12],
+                    degree=round(degree_fraction * 30, 2),
+                    retrograde=is_retrograde,
+                )
+            )
+        return positions

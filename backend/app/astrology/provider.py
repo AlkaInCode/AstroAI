@@ -48,6 +48,19 @@ class ChartResult:
     raw_response: dict
 
 
+@dataclass
+class TransitPosition:
+    """A planet's current sign/degree, independent of any individual's birth
+    chart -- transits are the same for everyone on a given date. Combining
+    this with a natal chart (house-from-Lagna, house-from-Moon, etc.) is
+    app.astrology.transits' job, not the provider's."""
+
+    name: str
+    sign: str
+    degree: float
+    retrograde: bool = False
+
+
 class AstrologyProvider(ABC):
     """Facts only. Never guessed, never hardcoded."""
 
@@ -55,4 +68,8 @@ class AstrologyProvider(ABC):
 
     @abstractmethod
     def calculate_chart(self, birth: BirthInput) -> ChartResult:
+        raise NotImplementedError
+
+    @abstractmethod
+    def calculate_transits(self, as_of: date) -> list[TransitPosition]:
         raise NotImplementedError

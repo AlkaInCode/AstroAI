@@ -16,7 +16,9 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 **Phase 5** (Yogas/Rajyogas) is also built and verified: a deterministic Yoga engine (`backend/app/astrology/yogas.py`) detects the five Pancha Mahapurusha Yogas, Gajakesari, Budhaditya, Chandra-Mangal, Raja, and Dhana Yogas from real chart facts — never guessed by the LLM — shown as dashboard cards and grounding the AI chat.
 
-**Phase 6** (Divisional Charts) is also built and verified: reusable Varga infrastructure (`backend/app/astrology/vargas.py`) computes D9/Navamsa, D7/Saptamsa, D10/Dasamsa and D12/Dwadasamsa from a single generic formula — adding another divisional chart later is one registry entry, not a new calculator. Required adding the Ascendant's precise degree to the chart model (previously only its sign was stored), which a real astrology API will need to supply too. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
+**Phase 6** (Divisional Charts) is also built and verified: reusable Varga infrastructure (`backend/app/astrology/vargas.py`) computes D9/Navamsa, D7/Saptamsa, D10/Dasamsa and D12/Dwadasamsa from a single generic formula — adding another divisional chart later is one registry entry, not a new calculator. Required adding the Ascendant's precise degree to the chart model (previously only its sign was stored), which a real astrology API will need to supply too.
+
+**Phase 7** (Transits) is also built and verified: current planetary transit positions (`backend/app/astrology/transits.py`) combined with each customer's natal Lagna and Moon, with deterministic Sade Sati and Jupiter Return detection, a date-pickable transit view on the dashboard, and transits grounding the AI chat. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
 
 ## Where to Start
 

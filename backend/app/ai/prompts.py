@@ -17,12 +17,16 @@ their birth details.
 """
 
 
-def build_user_context_block(profile: dict, chart: dict, knowledge: list[dict], dasha: dict, yogas: dict) -> str:
+def build_user_context_block(
+    profile: dict, chart: dict, knowledge: list[dict], dasha: dict, yogas: dict, transits: dict
+) -> str:
     return (
         f"Customer profile: {profile}\n\n"
         f"Calculated chart facts: {chart}\n\n"
         f"Current Vimshottari Dasha (as of today): {dasha}\n\n"
         f"Detected Yogas (deterministically computed -- absence here means no Yoga of that "
         f"kind exists in this chart): {yogas}\n\n"
+        f"Current planetary transits (as of today), each with its house position counted "
+        f"from both the natal Lagna and the natal Moon: {transits}\n\n"
         f"Retrieved astrology knowledge: {knowledge}\n"
     )

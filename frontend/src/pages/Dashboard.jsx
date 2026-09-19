@@ -9,6 +9,7 @@ import LifeAreaCards from "../components/LifeAreaCards";
 import DashaTimeline from "../components/DashaTimeline";
 import YogaCard from "../components/YogaCard";
 import DivisionalCharts from "../components/DivisionalCharts";
+import TransitCalendar from "../components/TransitCalendar";
 import AIChat from "../components/AIChat";
 
 export default function Dashboard() {
@@ -120,6 +121,10 @@ export default function Dashboard() {
 
       <div className="mt-6">
         <DivisionalCharts profileId={profile.id} available={availableVargas} />
+      </div>
+
+      <div className="mt-6">
+        <TransitCalendar profileId={profile.id} />
       </div>
 
       <div className="mt-6">

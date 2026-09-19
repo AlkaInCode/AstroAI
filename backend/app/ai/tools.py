@@ -11,8 +11,10 @@ and aspects -- see app.astrology.derivations). Phase 4 adds get_dasha
 app.astrology.dasha). Phase 5 adds get_yogas (deterministic Yoga
 detection -- see app.astrology.yogas; the AI explains a detected Yoga,
 it never decides whether one exists). Phase 6 adds get_varga_chart
-(divisional charts D9/D7/D10/D12 -- see app.astrology.vargas).
-get_transits remains stubbed for Phase 7.
+(divisional charts D9/D7/D10/D12 -- see app.astrology.vargas). Phase 7
+adds get_transits (current planetary positions combined with the natal
+chart -- see app.astrology.transits), including Sade Sati and Jupiter
+Return detection.
 """
 
 import uuid
@@ -22,6 +24,8 @@ from sqlalchemy.orm import Session
 
 from app.astrology.dasha import compute_dasha
 from app.astrology.derivations import absolute_longitude
+from app.astrology.factory import get_astrology_provider
+from app.astrology.transits import analyze_transits
 from app.astrology.vargas import VARGA_REGISTRY, compute_varga_chart
 from app.astrology.yogas import detect_yogas
 from app.models.birth_profile import BirthProfile
@@ -144,8 +148,25 @@ def get_varga_chart(db: Session, birth_profile_id: uuid.UUID, varga_key: str) ->
     return compute_varga_chart(varga_key, chart_data["lagna"], chart_data["lagna_degree"], chart_data["planets"])
 
 
-def get_transits(db: Session, birth_profile_id: uuid.UUID) -> dict:
-    return {"error": "not_implemented", "detail": "Transit data arrives in Phase 7"}
+def get_transits(db: Session, birth_profile_id: uuid.UUID, as_of: date | None = None) -> dict:
+    chart_data = get_chart(db, birth_profile_id)
+    if "error" in chart_data:
+        return chart_data
+
+    moon = next((p for p in chart_data["planets"] if p["name"] == "Moon"), None)
+    if moon is None:
+        return {"error": "moon_position_unavailable"}
+
+    as_of = as_of or date.today()
+    provider = get_astrology_provider()
+    transit_positions = [
+        {"name": t.name, "sign": t.sign, "degree": t.degree, "retrograde": t.retrograde}
+        for t in provider.calculate_transits(as_of)
+    ]
+    return {
+        "as_of": as_of.isoformat(),
+        **analyze_transits(transit_positions, chart_data["lagna"], moon["sign"], chart_data["planets"]),
+    }
 
 
 TOOL_REGISTRY = {

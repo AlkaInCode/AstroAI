@@ -46,6 +46,8 @@ export const api = {
   getYogas: (profileId) => request(`/profiles/${profileId}/yogas`),
   listVargas: (profileId) => request(`/profiles/${profileId}/vargas`),
   getVarga: (profileId, vargaKey) => request(`/profiles/${profileId}/vargas/${vargaKey}`),
+  getTransits: (profileId, asOf) =>
+    request(`/profiles/${profileId}/transits${asOf ? `?as_of=${asOf}` : ""}`),
 
   sendChatMessage: (birthProfileId, message, sessionId) =>
     request("/chat", { method: "POST", body: { birth_profile_id: birthProfileId, message, session_id: sessionId } }),

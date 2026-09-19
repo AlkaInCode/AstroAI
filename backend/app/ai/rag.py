@@ -260,6 +260,56 @@ _PLACEHOLDER_KNOWLEDGE = [
         ),
         "source": "Placeholder Phase-5 knowledge note",
     },
+    {
+        "topic": "Sade Sati",
+        "content": (
+            "Sade Sati is the roughly 7.5-year period when transiting Saturn moves "
+            "through the 12th, 1st and 2nd houses counted from a person's natal Moon "
+            "sign (about 2.5 years in each). It is traditionally considered a period of "
+            "significant restructuring, discipline and long-term life lessons."
+        ),
+        "source": "Placeholder Phase-7 knowledge note",
+    },
+    {
+        "topic": "Jupiter Return",
+        "content": (
+            "A Jupiter Return occurs when transiting Jupiter comes back to the same "
+            "sign it occupied at birth, roughly every 12 years as Jupiter completes one "
+            "orbit. It is traditionally considered a period of renewed growth, "
+            "opportunity and expansion in the themes that natal Jupiter represents."
+        ),
+        "source": "Placeholder Phase-7 knowledge note",
+    },
+    {
+        "topic": "Rahu",
+        "content": (
+            "Rahu is a shadow point (the Moon's ascending lunar node) representing "
+            "obsession, ambition and worldly desire. As a house lord or through "
+            "transit, it points to where a person feels an intense, sometimes "
+            "unconventional pull to achieve and expand."
+        ),
+        "source": "Placeholder Phase-7 knowledge note",
+    },
+    {
+        "topic": "Ketu",
+        "content": (
+            "Ketu is a shadow point (the Moon's descending lunar node) representing "
+            "detachment, introspection and past-life karma. Through transit, it "
+            "points to where a person may feel drawn to release, withdraw from, or "
+            "spiritually transcend material concerns."
+        ),
+        "source": "Placeholder Phase-7 knowledge note",
+    },
+    {
+        "topic": "transit",
+        "content": (
+            "A transit is the current real-time position of a planet as it moves "
+            "through the zodiac, read against the houses of a person's unchanging "
+            "natal chart. Transits are considered to activate or trigger the themes of "
+            "whichever natal house and planets they currently move through."
+        ),
+        "source": "Placeholder Phase-7 knowledge note",
+    },
 ]
 
 
