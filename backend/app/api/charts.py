@@ -21,6 +21,7 @@ def _to_chart_response(chart: Chart) -> ChartResponse:
         id=chart.id,
         birth_profile_id=chart.birth_profile_id,
         lagna=chart.lagna,
+        lagna_degree=chart.lagna_degree,
         rashi=chart.rashi,
         ayanamsa=chart.ayanamsa,
         house_system=chart.house_system,
@@ -53,6 +54,7 @@ def generate_chart(
     chart = Chart(
         birth_profile_id=profile.id,
         lagna=result.lagna,
+        lagna_degree=result.lagna_degree,
         rashi=result.rashi,
         ayanamsa=result.ayanamsa,
         house_system=result.house_system,

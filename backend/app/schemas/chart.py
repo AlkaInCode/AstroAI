@@ -23,6 +23,7 @@ class ChartResponse(BaseModel):
     id: uuid.UUID
     birth_profile_id: uuid.UUID
     lagna: str
+    lagna_degree: float
     rashi: str
     ayanamsa: str
     house_system: str

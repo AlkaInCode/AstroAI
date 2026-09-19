@@ -10,8 +10,9 @@ and aspects -- see app.astrology.derivations). Phase 4 adds get_dasha
 (Vimshottari Mahadasha/Antardasha/Pratyantardasha -- see
 app.astrology.dasha). Phase 5 adds get_yogas (deterministic Yoga
 detection -- see app.astrology.yogas; the AI explains a detected Yoga,
-it never decides whether one exists). get_transits remains stubbed for
-Phase 7.
+it never decides whether one exists). Phase 6 adds get_varga_chart
+(divisional charts D9/D7/D10/D12 -- see app.astrology.vargas).
+get_transits remains stubbed for Phase 7.
 """
 
 import uuid
@@ -21,6 +22,7 @@ from sqlalchemy.orm import Session
 
 from app.astrology.dasha import compute_dasha
 from app.astrology.derivations import absolute_longitude
+from app.astrology.vargas import VARGA_REGISTRY, compute_varga_chart
 from app.astrology.yogas import detect_yogas
 from app.models.birth_profile import BirthProfile
 from app.models.chart import Chart
@@ -52,6 +54,7 @@ def get_chart(db: Session, birth_profile_id: uuid.UUID) -> dict:
         return {"error": "chart_not_found"}
     return {
         "lagna": chart.lagna,
+        "lagna_degree": chart.lagna_degree,
         "rashi": chart.rashi,
         "ayanamsa": chart.ayanamsa,
         "house_system": chart.house_system,
@@ -132,6 +135,15 @@ def get_yogas(db: Session, birth_profile_id: uuid.UUID) -> dict:
     return {"yogas": detect_yogas(chart_data["lagna"], chart_data["planets"])}
 
 
+def get_varga_chart(db: Session, birth_profile_id: uuid.UUID, varga_key: str) -> dict:
+    if varga_key not in VARGA_REGISTRY:
+        return {"error": "unknown_varga", "detail": f"Unknown divisional chart '{varga_key}'"}
+    chart_data = get_chart(db, birth_profile_id)
+    if "error" in chart_data:
+        return chart_data
+    return compute_varga_chart(varga_key, chart_data["lagna"], chart_data["lagna_degree"], chart_data["planets"])
+
+
 def get_transits(db: Session, birth_profile_id: uuid.UUID) -> dict:
     return {"error": "not_implemented", "detail": "Transit data arrives in Phase 7"}
 
@@ -144,5 +156,6 @@ TOOL_REGISTRY = {
     "get_nakshatra": get_nakshatra,
     "get_dasha": get_dasha,
     "get_yogas": get_yogas,
+    "get_varga_chart": get_varga_chart,
     "get_transits": get_transits,
 }

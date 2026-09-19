@@ -40,6 +40,7 @@ class PlanetPlacement:
 @dataclass
 class ChartResult:
     lagna: str
+    lagna_degree: float
     rashi: str
     ayanamsa: str
     house_system: str

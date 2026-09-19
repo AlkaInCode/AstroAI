@@ -77,6 +77,9 @@ class ProkeralaAstrologyProvider(AstrologyProvider):
         ]
         return ChartResult(
             lagna=data.get("ascendant", {}).get("name", ""),
+            # TODO: confirm the actual field name for the Ascendant's degree-within-sign
+            # against Prokerala's live docs once credentials exist; this key is a guess.
+            lagna_degree=data.get("ascendant", {}).get("longitude", 0.0),
             rashi=data.get("chandra_rasi", {}).get("name", ""),
             ayanamsa="Lahiri",
             house_system="Whole Sign",

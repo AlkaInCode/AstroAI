@@ -44,6 +44,8 @@ export const api = {
   getChart: (profileId) => request(`/profiles/${profileId}/chart`),
   getDasha: (profileId) => request(`/profiles/${profileId}/dasha`),
   getYogas: (profileId) => request(`/profiles/${profileId}/yogas`),
+  listVargas: (profileId) => request(`/profiles/${profileId}/vargas`),
+  getVarga: (profileId, vargaKey) => request(`/profiles/${profileId}/vargas/${vargaKey}`),
 
   sendChatMessage: (birthProfileId, message, sessionId) =>
     request("/chat", { method: "POST", body: { birth_profile_id: birthProfileId, message, session_id: sessionId } }),

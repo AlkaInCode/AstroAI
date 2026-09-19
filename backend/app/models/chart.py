@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, String
+from sqlalchemy import DateTime, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -17,6 +17,9 @@ class Chart(Base):
     )
 
     lagna: Mapped[str] = mapped_column(String(50), nullable=False)
+    # Degree-within-sign of the Ascendant, needed to compute an accurate divisional
+    # (Varga) chart Lagna -- see app.astrology.vargas (Phase 6).
+    lagna_degree: Mapped[float] = mapped_column(Float, nullable=False)
     rashi: Mapped[str] = mapped_column(String(50), nullable=False)
     ayanamsa: Mapped[str] = mapped_column(String(100), nullable=False)
     house_system: Mapped[str] = mapped_column(String(100), nullable=False)

@@ -45,9 +45,11 @@ class MockAstrologyProvider(AstrologyProvider):
         ]
 
         lagna_sign = SIGNS[seed % 12]
+        lagna_degree = round((seed % 3000) / 100, 2)
 
         return ChartResult(
             lagna=lagna_sign,
+            lagna_degree=lagna_degree,
             rashi=SIGNS[(seed + 1) % 12],
             ayanamsa="Lahiri",
             house_system="Whole Sign",

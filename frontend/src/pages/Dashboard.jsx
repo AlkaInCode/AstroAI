@@ -8,6 +8,7 @@ import PlanetTable from "../components/PlanetTable";
 import LifeAreaCards from "../components/LifeAreaCards";
 import DashaTimeline from "../components/DashaTimeline";
 import YogaCard from "../components/YogaCard";
+import DivisionalCharts from "../components/DivisionalCharts";
 import AIChat from "../components/AIChat";
 
 export default function Dashboard() {
@@ -16,6 +17,7 @@ export default function Dashboard() {
   const [chart, setChart] = useState(null);
   const [dasha, setDasha] = useState(null);
   const [yogas, setYogas] = useState(null);
+  const [availableVargas, setAvailableVargas] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,13 +26,20 @@ export default function Dashboard() {
     setIsLoading(true);
     setError("");
 
-    Promise.all([api.getProfile(profileId), api.getChart(profileId), api.getDasha(profileId), api.getYogas(profileId)])
-      .then(([profileData, chartData, dashaData, yogasData]) => {
+    Promise.all([
+      api.getProfile(profileId),
+      api.getChart(profileId),
+      api.getDasha(profileId),
+      api.getYogas(profileId),
+      api.listVargas(profileId),
+    ])
+      .then(([profileData, chartData, dashaData, yogasData, vargasData]) => {
         if (cancelled) return;
         setProfile(profileData);
         setChart({ ...chartData, planets: chartData.planetary_data.planets });
         setDasha(dashaData);
         setYogas(yogasData.yogas);
+        setAvailableVargas(vargasData.available);
       })
       .catch((err) => {
         if (!cancelled) setError(err.message || "Could not load this Kundli.");
@@ -107,6 +116,10 @@ export default function Dashboard() {
             No classical Yogas from our current detection set were found in this chart.
           </div>
         )}
+      </div>
+
+      <div className="mt-6">
+        <DivisionalCharts profileId={profile.id} available={availableVargas} />
       </div>
 
       <div className="mt-6">
