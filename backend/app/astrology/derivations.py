@@ -26,7 +26,8 @@ NAKSHATRAS = [
     "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha",
     "Purva Bhadrapada", "Uttara Bhadrapada", "Revati",
 ]
-_NAKSHATRA_SPAN = 360 / 27  # 13deg20'
+NAKSHATRA_SPAN = 360 / 27  # 13deg20', also used by Vimshottari Dasha (app.astrology.dasha)
+_NAKSHATRA_SPAN = NAKSHATRA_SPAN
 _PADA_SPAN = _NAKSHATRA_SPAN / 4  # 3deg20'
 
 # Exaltation/debilitation signs are always exactly opposite each other.

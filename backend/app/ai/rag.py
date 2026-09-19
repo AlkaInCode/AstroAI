@@ -149,6 +149,26 @@ _PLACEHOLDER_KNOWLEDGE = [
         ),
         "source": "Placeholder Phase-2 knowledge note",
     },
+    {
+        "topic": "Mahadasha",
+        "content": (
+            "Vimshottari Mahadasha is a 120-year cyclic system of planetary periods, "
+            "keyed off the Moon's Nakshatra at birth. Each of the 9 grahas rules a "
+            "Mahadasha of a fixed length, and the planet running at any given time is "
+            "considered a major influence on the themes active in a person's life then."
+        ),
+        "source": "Placeholder Phase-4 knowledge note",
+    },
+    {
+        "topic": "Antardasha",
+        "content": (
+            "Within each Mahadasha, an Antardasha (sub-period) of every planet occurs "
+            "in turn, starting with the Mahadasha's own planet. The Antardasha planet "
+            "adds its own flavor on top of the ruling Mahadasha, refining the timing "
+            "of when a particular theme is most active."
+        ),
+        "source": "Placeholder Phase-4 knowledge note",
+    },
 ]
 
 

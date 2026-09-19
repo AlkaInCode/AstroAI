@@ -15,9 +15,10 @@ their birth details.
 """
 
 
-def build_user_context_block(profile: dict, chart: dict, knowledge: list[dict]) -> str:
+def build_user_context_block(profile: dict, chart: dict, knowledge: list[dict], dasha: dict) -> str:
     return (
         f"Customer profile: {profile}\n\n"
         f"Calculated chart facts: {chart}\n\n"
+        f"Current Vimshottari Dasha (as of today): {dasha}\n\n"
         f"Retrieved astrology knowledge: {knowledge}\n"
     )

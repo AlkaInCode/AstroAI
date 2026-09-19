@@ -10,7 +10,9 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 **Phase 2** (planetary detail) is also built and verified: every planet placement now carries Nakshatra, Pada, combustion, exaltation/debilitation, Vargottama, and Parashari aspects — computed by a shared, provider-agnostic rule engine (`backend/app/astrology/derivations.py`) so any calculation provider gets these attributes consistently.
 
-**Phase 3** (better personal analysis) is also built and verified: the Personality/Career/Love/Money/General life-area cards now reason over house lords and each significator's actual dignity/combustion state, with a short RAG-grounded knowledge note per card (`backend/app/ai/life_areas.py`). Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
+**Phase 3** (better personal analysis) is also built and verified: the Personality/Career/Love/Money/General life-area cards now reason over house lords and each significator's actual dignity/combustion state, with a short RAG-grounded knowledge note per card (`backend/app/ai/life_areas.py`).
+
+**Phase 4** (Vimshottari Dasha) is also built and verified: full Mahadasha/Antardasha timeline from birth, current Mahadasha/Antardasha/Pratyantardasha resolution as of today, a dashboard timeline UI, and the AI chat is now grounded with the customer's current Dasha (`backend/app/astrology/dasha.py`). Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
 
 ## Where to Start
 

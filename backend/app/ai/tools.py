@@ -6,14 +6,18 @@ these for any question about the customer's chart. It must never answer
 a chart-fact question from the LLM's own "knowledge". Phase 1 covers
 profile/chart/planets/houses; Phase 2 adds get_nakshatra (planet
 placements now carry Nakshatra, Pada, combustion, dignity, Vargottama
-and aspects -- see app.astrology.derivations). get_dasha/get_yogas/
-get_transits remain stubbed for Phases 4/5/7.
+and aspects -- see app.astrology.derivations). Phase 4 adds get_dasha
+(Vimshottari Mahadasha/Antardasha/Pratyantardasha -- see
+app.astrology.dasha). get_yogas/get_transits remain stubbed for Phases 5/7.
 """
 
 import uuid
+from datetime import date
 
 from sqlalchemy.orm import Session
 
+from app.astrology.dasha import compute_dasha
+from app.astrology.derivations import absolute_longitude
 from app.models.birth_profile import BirthProfile
 from app.models.chart import Chart
 
@@ -81,8 +85,40 @@ def get_nakshatra(db: Session, birth_profile_id: uuid.UUID, planet_name: str) ->
     }
 
 
+def compute_dasha_for_profile(db: Session, birth_profile_id: uuid.UUID, as_of: date | None = None) -> dict:
+    """Shared by the AI tool (trimmed) and the /dasha API route (full detail)."""
+    profile = db.get(BirthProfile, birth_profile_id)
+    if profile is None:
+        return {"error": "profile_not_found"}
+
+    chart_data = get_chart(db, birth_profile_id)
+    if "error" in chart_data:
+        return chart_data
+
+    moon = next((p for p in chart_data["planets"] if p["name"] == "Moon"), None)
+    if moon is None:
+        return {"error": "moon_position_unavailable"}
+
+    moon_longitude = absolute_longitude(moon["sign"], moon["degree"])
+    return compute_dasha(profile.dob, moon_longitude, as_of=as_of)
+
+
 def get_dasha(db: Session, birth_profile_id: uuid.UUID) -> dict:
-    return {"error": "not_implemented", "detail": "Dasha data arrives in Phase 4"}
+    result = compute_dasha_for_profile(db, birth_profile_id)
+    if "error" in result:
+        return result
+    # Trimmed for AI grounding -- the full 9-Mahadasha/81-Antardasha tree is
+    # for the dashboard timeline (GET /profiles/{id}/dasha), not chat context.
+    return {
+        "current_mahadasha": result["current_mahadasha"],
+        "current_antardasha": result["current_antardasha"],
+        "current_pratyantardasha": result["current_pratyantardasha"],
+        "upcoming_mahadashas": [
+            {"planet": m["planet"], "start": m["start"], "end": m["end"]}
+            for m in result["mahadasha_sequence"]
+            if m["start"] > date.today().isoformat()
+        ][:3],
+    }
 
 
 def get_yogas(db: Session, birth_profile_id: uuid.UUID) -> dict:
