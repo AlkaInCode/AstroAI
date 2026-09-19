@@ -14,7 +14,9 @@ it never decides whether one exists). Phase 6 adds get_varga_chart
 (divisional charts D9/D7/D10/D12 -- see app.astrology.vargas). Phase 7
 adds get_transits (current planetary positions combined with the natal
 chart -- see app.astrology.transits), including Sade Sati and Jupiter
-Return detection.
+Return detection. get_numerology reads the customer's stored numerology
+results (see app.numerology.calculations and app.api.numerology, which
+compute and persist them).
 """
 
 import uuid
@@ -30,6 +32,7 @@ from app.astrology.vargas import VARGA_REGISTRY, compute_varga_chart
 from app.astrology.yogas import detect_yogas
 from app.models.birth_profile import BirthProfile
 from app.models.chart import Chart
+from app.models.numerology_result import NumerologyResult
 
 
 def get_profile(db: Session, birth_profile_id: uuid.UUID) -> dict:
@@ -169,6 +172,25 @@ def get_transits(db: Session, birth_profile_id: uuid.UUID, as_of: date | None = 
     }
 
 
+def get_numerology(db: Session, birth_profile_id: uuid.UUID) -> dict:
+    result = (
+        db.query(NumerologyResult)
+        .filter(NumerologyResult.birth_profile_id == birth_profile_id)
+        .order_by(NumerologyResult.created_at.desc())
+        .first()
+    )
+    if result is None:
+        return {"error": "numerology_not_computed"}
+    return {
+        "full_name_used": result.full_name_used,
+        "life_path_number": result.life_path_number,
+        "expression_number": result.expression_number,
+        "soul_urge_number": result.soul_urge_number,
+        "personality_number": result.personality_number,
+        "chaldean_destiny_number": result.chaldean_destiny_number,
+    }
+
+
 TOOL_REGISTRY = {
     "get_profile": get_profile,
     "get_chart": get_chart,
@@ -179,4 +201,5 @@ TOOL_REGISTRY = {
     "get_yogas": get_yogas,
     "get_varga_chart": get_varga_chart,
     "get_transits": get_transits,
+    "get_numerology": get_numerology,
 }

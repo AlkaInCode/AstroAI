@@ -14,7 +14,7 @@ export default function CreateProfile() {
     setIsSubmitting(true);
     try {
       const profile = await api.createProfile(payload);
-      await api.generateChart(profile.id);
+      await Promise.all([api.generateChart(profile.id), api.generateNumerology(profile.id)]);
       navigate(`/dashboard/${profile.id}`);
     } catch (err) {
       setError(err.message || "Could not generate your Kundli. Please check your details and try again.");

@@ -48,6 +48,8 @@ export const api = {
   getVarga: (profileId, vargaKey) => request(`/profiles/${profileId}/vargas/${vargaKey}`),
   getTransits: (profileId, asOf) =>
     request(`/profiles/${profileId}/transits${asOf ? `?as_of=${asOf}` : ""}`),
+  generateNumerology: (profileId) => request(`/profiles/${profileId}/numerology`, { method: "POST" }),
+  getNumerology: (profileId) => request(`/profiles/${profileId}/numerology`),
 
   sendChatMessage: (birthProfileId, message, sessionId) =>
     request("/chat", { method: "POST", body: { birth_profile_id: birthProfileId, message, session_id: sessionId } }),

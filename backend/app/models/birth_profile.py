@@ -40,3 +40,6 @@ class BirthProfile(Base):
     conversations: Mapped[list["Conversation"]] = relationship(
         back_populates="birth_profile", cascade="all, delete-orphan"
     )
+    numerology_results: Mapped[list["NumerologyResult"]] = relationship(
+        back_populates="birth_profile", cascade="all, delete-orphan"
+    )

@@ -325,5 +325,136 @@ def search_astrology_knowledge(query: str, top_k: int = 3, allow_fallback: bool 
     return _PLACEHOLDER_KNOWLEDGE[:top_k] if allow_fallback else []
 
 
-def search_numerology_knowledge(query: str, top_k: int = 3) -> list[dict]:
-    return []
+_NUMEROLOGY_KNOWLEDGE = [
+    {
+        "topic": "Life Path",
+        "content": (
+            "The Life Path number, derived from the full date of birth, is traditionally "
+            "considered the single most important number in a numerology reading -- a "
+            "broad outline of a person's overall direction, natural tendencies and the "
+            "lessons their life is built around."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "Expression",
+        "content": (
+            "The Expression (or Destiny) number, derived from every letter of the full "
+            "birth name, traditionally represents a person's natural talents, abilities "
+            "and the potential they are equipped to develop over a lifetime."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "Soul Urge",
+        "content": (
+            "The Soul Urge (or Heart's Desire) number, derived from only the vowels in "
+            "the full birth name, traditionally represents inner motivation -- what a "
+            "person deeply wants, values and is driven by beneath the surface."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "Personality",
+        "content": (
+            "The Personality number, derived from only the consonants in the full birth "
+            "name, traditionally represents the outer impression a person makes on "
+            "others before being truly known."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "Chaldean",
+        "content": (
+            "Chaldean numerology is an older system that assigns letters to numbers "
+            "1-8 (no letter is ever valued 9) based on sound and vibration rather than "
+            "simple alphabetical sequence. Practitioners consider it a more traditional "
+            "alternative to the modern Pythagorean system."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 1 meaning",
+        "content": "The number 1 is traditionally associated with leadership, independence, ambition and new beginnings.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 2 meaning",
+        "content": "The number 2 is traditionally associated with partnership, diplomacy, sensitivity and cooperation.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 3 meaning",
+        "content": "The number 3 is traditionally associated with creativity, self-expression, optimism and communication.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 4 meaning",
+        "content": "The number 4 is traditionally associated with discipline, stability, hard work and building solid foundations.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 5 meaning",
+        "content": "The number 5 is traditionally associated with freedom, adaptability, change and adventure.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 6 meaning",
+        "content": "The number 6 is traditionally associated with responsibility, nurturing, harmony and service to others.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 7 meaning",
+        "content": "The number 7 is traditionally associated with introspection, analysis, spirituality and the pursuit of deeper truth.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 8 meaning",
+        "content": "The number 8 is traditionally associated with ambition, authority, material success and personal power.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "number 9 meaning",
+        "content": "The number 9 is traditionally associated with compassion, idealism, humanitarianism and completion.",
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "master number 11",
+        "content": (
+            "11 is a Master Number, kept unreduced. It is traditionally associated with "
+            "intuition, inspiration and heightened spiritual sensitivity -- an "
+            "intensified version of the number 2's diplomacy and insight."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "master number 22",
+        "content": (
+            "22 is a Master Number, kept unreduced. It is traditionally called the "
+            "'Master Builder', associated with turning big visions into large-scale, "
+            "practical achievement -- an intensified version of the number 4's discipline."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+    {
+        "topic": "master number 33",
+        "content": (
+            "33 is a Master Number, kept unreduced. It is traditionally called the "
+            "'Master Teacher', associated with profound compassion and selfless service "
+            "to others -- an intensified version of the number 6's nurturing quality."
+        ),
+        "source": "Placeholder Numerology knowledge note",
+    },
+]
+
+
+def search_numerology_knowledge(query: str, top_k: int = 3, allow_fallback: bool = False) -> list[dict]:
+    query_lower = query.lower()
+    scored = [
+        entry
+        for entry in _NUMEROLOGY_KNOWLEDGE
+        if entry["topic"].lower() in query_lower or query_lower in entry["topic"].lower()
+    ]
+    if scored:
+        return scored[:top_k]
+    return _NUMEROLOGY_KNOWLEDGE[:top_k] if allow_fallback else []

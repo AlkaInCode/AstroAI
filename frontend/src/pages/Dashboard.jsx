@@ -10,6 +10,7 @@ import DashaTimeline from "../components/DashaTimeline";
 import YogaCard from "../components/YogaCard";
 import DivisionalCharts from "../components/DivisionalCharts";
 import TransitCalendar from "../components/TransitCalendar";
+import NumerologyProfile from "../components/NumerologyProfile";
 import AIChat from "../components/AIChat";
 
 export default function Dashboard() {
@@ -19,6 +20,8 @@ export default function Dashboard() {
   const [dasha, setDasha] = useState(null);
   const [yogas, setYogas] = useState(null);
   const [availableVargas, setAvailableVargas] = useState(null);
+  const [numerology, setNumerology] = useState(null);
+  const [isComputingNumerology, setIsComputingNumerology] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -33,14 +36,16 @@ export default function Dashboard() {
       api.getDasha(profileId),
       api.getYogas(profileId),
       api.listVargas(profileId),
+      api.getNumerology(profileId).catch(() => null), // not yet computed for profiles created before this feature
     ])
-      .then(([profileData, chartData, dashaData, yogasData, vargasData]) => {
+      .then(([profileData, chartData, dashaData, yogasData, vargasData, numerologyData]) => {
         if (cancelled) return;
         setProfile(profileData);
         setChart({ ...chartData, planets: chartData.planetary_data.planets });
         setDasha(dashaData);
         setYogas(yogasData.yogas);
         setAvailableVargas(vargasData.available);
+        setNumerology(numerologyData);
       })
       .catch((err) => {
         if (!cancelled) setError(err.message || "Could not load this Kundli.");
@@ -53,6 +58,18 @@ export default function Dashboard() {
       cancelled = true;
     };
   }, [profileId]);
+
+  async function handleComputeNumerology() {
+    setIsComputingNumerology(true);
+    try {
+      const result = await api.generateNumerology(profileId);
+      setNumerology(result);
+    } catch (err) {
+      setError(err.message || "Could not calculate numerology.");
+    } finally {
+      setIsComputingNumerology(false);
+    }
+  }
 
   if (isLoading) return <LoadingState label="Reading the stars..." />;
   if (error) {
@@ -125,6 +142,23 @@ export default function Dashboard() {
 
       <div className="mt-6">
         <TransitCalendar profileId={profile.id} />
+      </div>
+
+      <div className="mt-6">
+        {numerology ? (
+          <NumerologyProfile numerology={numerology} />
+        ) : (
+          <div className="rounded-3xl bg-white/70 p-6 text-center shadow-sm">
+            <p className="mb-3 text-sm text-brand-slate/60">Numerology hasn't been calculated for this profile yet.</p>
+            <button
+              onClick={handleComputeNumerology}
+              disabled={isComputingNumerology}
+              className="rounded-full bg-brand-blue-deep px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:shadow-md disabled:opacity-60"
+            >
+              {isComputingNumerology ? "Calculating..." : "Calculate Numerology"}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-6">
