@@ -37,11 +37,21 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 - **Frontend:** React + Vite + Tailwind CSS
 - **Backend:** Python + FastAPI + SQLAlchemy + Pydantic
-- **Database:** PostgreSQL (native Windows install, no Docker)
+- **Database:** PostgreSQL + pgvector (native Windows install, or via Docker)
 - **Astrology calculation:** external API, abstracted behind an internal interface — mock provider for local dev, Prokerala integration ready for real credentials
 - **AI:** LLM + tool-calling + RAG, backend-only
 
 ## Running Locally
+
+### Option A: Docker (recommended — no local Postgres/Python/Node install needed)
+
+```bash
+docker compose up --build
+```
+
+Starts Postgres (with `pgvector` enabled), the backend on `http://localhost:8000`, and the frontend on `http://localhost:5173`. Migrations run automatically on backend startup. Source is bind-mounted, so edits on your machine are picked up live. Override any `.env`-style value (e.g. `LLM_API_KEY`) by exporting it before running, or by adding a `.env` file next to `docker-compose.yml` — Compose reads it automatically.
+
+### Option B: Native (no Docker)
 
 1. PostgreSQL running as a Windows service, with the `astroai` database/user created (see `backend/README.md`).
 2. Backend: `cd backend`, create a venv, `pip install -r requirements.txt`, copy `.env.example` to `.env`, `alembic upgrade head`, then `uvicorn app.main:app --reload`.

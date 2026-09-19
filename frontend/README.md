@@ -1,6 +1,8 @@
 # AstroAI Frontend
 
-React + Vite + Tailwind CSS frontend for Phase 1.
+React + Vite + Tailwind CSS frontend.
+
+Prefer running this via `docker compose up --build` from the repo root (see the top-level README) unless you specifically need to run it natively.
 
 ## Setup
 
@@ -9,16 +11,18 @@ npm install
 npm run dev
 ```
 
-Runs at `http://localhost:5173`. API calls to `/api/*` are proxied to the backend at
-`http://localhost:8000` (see `vite.config.js`) — run the backend alongside this.
+Runs at `http://localhost:5173`. API calls to `/api/*` are proxied to the backend (`http://localhost:8000` by default,
+or `VITE_BACKEND_URL` if set — see `vite.config.js`) — run the backend alongside this.
 
 ## Pages
 
 - `/` — landing page
 - `/signup`, `/login` — auth
 - `/create-profile` — birth details form (protected)
-- `/dashboard` — redirects to the customer's existing Kundli, or to profile creation if they have none
-- `/dashboard/:profileId` — Kundli chart, planet table, life-area summary, AI chat (protected)
+- `/dashboard` — routes to the customer's one Kundli, the clients list if they have several, or profile creation if they have none
+- `/dashboard/:profileId` — Kundli chart, planet table, life-area summary, Dasha timeline, Yogas, divisional charts, transits, numerology, AI chat (protected)
+- `/clients` — searchable list of all birth profiles under the account, with inline rename and delete (protected)
+- `/settings` — bring-your-own LLM API key (protected)
 
 ## Notes
 

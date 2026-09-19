@@ -2,6 +2,8 @@
 
 FastAPI backend for Phase 1: signup/login, birth profile intake, chart generation, and the AI chat assistant.
 
+Prefer running this via `docker compose up --build` from the repo root (see the top-level README) unless you specifically need to run it natively.
+
 ## Setup
 
 ```bash
