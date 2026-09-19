@@ -8,7 +8,7 @@ one new implementation here -- nothing else in the app changes.
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, time
 
 
@@ -28,6 +28,13 @@ class PlanetPlacement:
     house: int
     degree: float
     retrograde: bool = False
+    nakshatra: str = ""
+    nakshatra_pada: int = 0
+    exalted: bool = False
+    debilitated: bool = False
+    combust: bool = False
+    vargottama: bool = False
+    aspects: list[int] = field(default_factory=list)
 
 
 @dataclass

@@ -23,7 +23,10 @@ class Chart(Base):
     calculation_provider: Mapped[str] = mapped_column(String(100), nullable=False)
 
     # Structured, normalized chart facts our own tools/UI read from. Shape:
-    # {"planets": [{"name": "Jupiter", "sign": "Leo", "house": 5, "degree": 12.34, "retrograde": false}, ...]}
+    # {"planets": [{"name": "Jupiter", "sign": "Leo", "house": 5, "degree": 12.34,
+    #   "retrograde": false, "nakshatra": "Magha", "nakshatra_pada": 2,
+    #   "exalted": false, "debilitated": false, "combust": false,
+    #   "vargottama": false, "aspects": [5, 9, 11]}, ...]}
     planetary_data: Mapped[dict] = mapped_column(JSONB, nullable=False)
 
     # Untouched provider response, kept so a chart can be reprocessed later without re-calling the API.

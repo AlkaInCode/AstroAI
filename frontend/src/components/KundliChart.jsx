@@ -19,7 +19,9 @@ const HOUSE_LABEL_POSITIONS = {
 
 export default function KundliChart({ chart }) {
   const planetAbbrevByHouse = Array.from({ length: 12 }, (_, i) => i + 1).reduce((acc, house) => {
-    acc[house] = chart.planets.filter((p) => p.house === house).map((p) => p.name.slice(0, 2));
+    acc[house] = chart.planets
+      .filter((p) => p.house === house)
+      .map((p) => p.name.slice(0, 2) + (p.retrograde ? "ᴿ" : ""));
     return acc;
   }, {});
 

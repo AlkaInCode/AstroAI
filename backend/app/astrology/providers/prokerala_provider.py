@@ -10,6 +10,7 @@ that mapping lives, so the rest of the app is unaffected by that work.
 
 import httpx
 
+from app.astrology.derivations import absolute_longitude, enrich_planet
 from app.astrology.provider import AstrologyProvider, BirthInput, ChartResult, PlanetPlacement
 from app.config import settings
 
@@ -56,15 +57,23 @@ class ProkeralaAstrologyProvider(AstrologyProvider):
     @staticmethod
     def _map_response(payload: dict) -> ChartResult:
         data = payload.get("data", {})
+        raw_positions = data.get("planet_position", [])
+
+        sun_raw = next((p for p in raw_positions if p["name"] == "Sun"), None)
+        sun_longitude = absolute_longitude(sun_raw["rasi"]["name"], sun_raw["longitude"]) if sun_raw else 0.0
+
         planets = [
             PlanetPlacement(
                 name=p["name"],
                 sign=p["rasi"]["name"],
                 house=p["position"],
                 degree=p["longitude"],
-                retrograde=p.get("is_retrograde", False),
+                **enrich_planet(
+                    p["name"], p["rasi"]["name"], p["longitude"], p["position"],
+                    p.get("is_retrograde", False), sun_longitude,
+                ),
             )
-            for p in data.get("planet_position", [])
+            for p in raw_positions
         ]
         return ChartResult(
             lagna=data.get("ascendant", {}).get("name", ""),

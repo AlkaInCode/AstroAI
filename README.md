@@ -6,7 +6,9 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 ## Project Status
 
-Phase 1 MVP scaffolding is built and verified end-to-end: signup, login, birth profile intake, chart generation (mock provider), the Kundli dashboard, and the AI chat all work against a real local PostgreSQL database. See the docs below for the full plan.
+**Phase 1** is built and verified end-to-end: signup, login, birth profile intake, chart generation (mock provider), the Kundli dashboard, and the AI chat all work against a real local PostgreSQL database.
+
+**Phase 2** (planetary detail) is also built and verified: every planet placement now carries Nakshatra, Pada, combustion, exaltation/debilitation, Vargottama, and Parashari aspects — computed by a shared, provider-agnostic rule engine (`backend/app/astrology/derivations.py`) so any calculation provider gets these attributes consistently. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
 
 ## Where to Start
 

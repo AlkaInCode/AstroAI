@@ -53,6 +53,60 @@ _PLACEHOLDER_KNOWLEDGE = [
         ),
         "source": "Placeholder Phase-1 knowledge note",
     },
+    {
+        "topic": "Nakshatra",
+        "content": (
+            "Each planet's Nakshatra (lunar mansion) is one of 27 divisions of the "
+            "zodiac, each further split into four Padas (quarters). The Nakshatra "
+            "adds a finer layer of meaning beyond the sign, especially for the Moon."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
+    {
+        "topic": "combust",
+        "content": (
+            "A planet is considered combust when it sits too close to the Sun. "
+            "Classically this is thought to weaken the planet's ability to express "
+            "its own significations clearly, as its light is 'overpowered' by the Sun's."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
+    {
+        "topic": "exalted",
+        "content": (
+            "A planet is exalted in a specific sign where its qualities are "
+            "traditionally considered strongest and most naturally expressed."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
+    {
+        "topic": "debilitated",
+        "content": (
+            "A planet is debilitated in the sign directly opposite its exaltation "
+            "sign, where its qualities are traditionally considered weakest or most "
+            "challenged -- though this can also point to areas needing conscious effort."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
+    {
+        "topic": "Vargottama",
+        "content": (
+            "A planet is Vargottama when it occupies the same sign in both the "
+            "birth chart (Rashi/D1) and the Navamsa chart (D9). This is traditionally "
+            "considered a strengthening placement, reinforcing that planet's results."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
+    {
+        "topic": "aspects",
+        "content": (
+            "In Parashari Vedic astrology, every planet casts a full aspect on the "
+            "house 7 positions from itself. Mars, Jupiter and Saturn have additional "
+            "special aspects: Mars aspects the 4th and 8th, Jupiter the 5th and 9th, "
+            "and Saturn the 3rd and 10th houses from its own position."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
+    },
 ]
 
 
