@@ -20,7 +20,9 @@ A customer signs up, enters their birth details once, and receives an accurately
 
 **Phase 7** (Transits) is also built and verified: current planetary transit positions (`backend/app/astrology/transits.py`) combined with each customer's natal Lagna and Moon, with deterministic Sade Sati and Jupiter Return detection, a date-pickable transit view on the dashboard, and transits grounding the AI chat.
 
-**Numerology** (parallel track) is also built and verified: Life Path, Expression, Soul Urge, Personality and Chaldean Destiny numbers computed deterministically from name and birth date (`backend/app/numerology/calculations.py`, correctly preserving Master Numbers 11/22/33), persisted per profile, shown as dashboard cards, and grounding the AI chat. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
+**Numerology** (parallel track) is also built and verified: Life Path, Expression, Soul Urge, Personality and Chaldean Destiny numbers computed deterministically from name and birth date (`backend/app/numerology/calculations.py`, correctly preserving Master Numbers 11/22/33), persisted per profile, shown as dashboard cards, and grounding the AI chat.
+
+**My Clients** (parallel track) is also built and verified: an account can hold multiple birth profiles (e.g. family members), with a searchable list, inline name editing, and delete (`frontend/src/pages/Clients.jsx` + profile PATCH/DELETE endpoints) — `/dashboard` now goes straight to the one Kundli for single-profile accounts, or to the clients list once there's more than one. Real API keys (astrology + LLM) are intentionally not wired in yet — see the docs below for the full plan.
 
 ## Where to Start
 

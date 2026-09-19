@@ -4,8 +4,9 @@ import { api } from "../api/client";
 import LoadingState from "../components/LoadingState";
 import ErrorState from "../components/ErrorState";
 
-// Entry point for /dashboard with no profile id yet -- sends the customer to
-// their existing Kundli, or to profile creation if this is their first visit.
+// Entry point for /dashboard with no profile id yet -- sends the customer
+// straight to their one Kundli, to the clients list if they have several
+// (e.g. family members), or to profile creation if this is their first visit.
 export default function DashboardRedirect() {
   const [target, setTarget] = useState(null);
   const [error, setError] = useState("");
@@ -14,7 +15,9 @@ export default function DashboardRedirect() {
     api
       .listProfiles()
       .then((profiles) => {
-        setTarget(profiles.length > 0 ? `/dashboard/${profiles[0].id}` : "/create-profile");
+        if (profiles.length === 0) setTarget("/create-profile");
+        else if (profiles.length === 1) setTarget(`/dashboard/${profiles[0].id}`);
+        else setTarget("/clients");
       })
       .catch((err) => setError(err.message || "Could not load your profiles."));
   }, []);

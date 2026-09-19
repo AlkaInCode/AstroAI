@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import CreateProfile from "./pages/CreateProfile";
 import Dashboard from "./pages/Dashboard";
 import DashboardRedirect from "./pages/DashboardRedirect";
+import Clients from "./pages/Clients";
 
 export default function App() {
   return (
@@ -39,6 +40,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/clients"
+            element={
+              <ProtectedRoute>
+                <Clients />
               </ProtectedRoute>
             }
           />

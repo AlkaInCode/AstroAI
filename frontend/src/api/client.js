@@ -39,6 +39,8 @@ export const api = {
   listProfiles: () => request("/profiles"),
   createProfile: (payload) => request("/profiles", { method: "POST", body: payload }),
   getProfile: (profileId) => request(`/profiles/${profileId}`),
+  updateProfile: (profileId, payload) => request(`/profiles/${profileId}`, { method: "PATCH", body: payload }),
+  deleteProfile: (profileId) => request(`/profiles/${profileId}`, { method: "DELETE" }),
 
   generateChart: (profileId) => request(`/profiles/${profileId}/chart`, { method: "POST" }),
   getChart: (profileId) => request(`/profiles/${profileId}/chart`),

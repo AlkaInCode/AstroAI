@@ -19,6 +19,20 @@ class BirthProfileCreate(BaseModel):
     timezone: str
 
 
+class BirthProfileUpdate(BaseModel):
+    full_name: str | None = Field(default=None, min_length=1, max_length=255)
+    gender: str | None = Field(default=None, min_length=1, max_length=50)
+    dob: date | None = None
+    birth_time: time | None = None
+    birth_place: str | None = None
+    city: str | None = None
+    state: str | None = None
+    country: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    timezone: str | None = None
+
+
 class BirthProfileResponse(BaseModel):
     id: uuid.UUID
     full_name: str
