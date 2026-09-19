@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export function AuthCard({ title, subtitle, children }) {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center px-6 py-16">
@@ -11,17 +13,32 @@ export function AuthCard({ title, subtitle, children }) {
 }
 
 export function Field({ label, value, onChange, type = "text", required = false, minLength }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
+
   return (
     <label className="block text-sm font-medium text-brand-slate/80">
       {label}
-      <input
-        type={type}
-        required={required}
-        minLength={minLength}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-xl border border-brand-blue/60 bg-white px-4 py-2.5 text-brand-slate outline-none transition focus:border-brand-blue-deep focus:ring-2 focus:ring-brand-blue/50"
-      />
+      <div className="relative mt-1">
+        <input
+          type={isPassword && showPassword ? "text" : type}
+          required={required}
+          minLength={minLength}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full rounded-xl border border-brand-blue/60 bg-white px-4 py-2.5 text-brand-slate outline-none transition focus:border-brand-blue-deep focus:ring-2 focus:ring-brand-blue/50"
+        />
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-0 flex items-center px-4 text-sm font-medium text-brand-slate/60 hover:text-brand-blue-deep"
+            tabIndex={-1}
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        )}
+      </div>
     </label>
   );
 }
