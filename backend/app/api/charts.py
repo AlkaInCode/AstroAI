@@ -3,6 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.ai.life_areas import build_life_areas
 from app.api.deps import get_current_user, get_owned_profile
 from app.astrology.factory import get_astrology_provider
 from app.astrology.provider import BirthInput
@@ -14,12 +15,28 @@ from app.schemas.chart import ChartResponse
 router = APIRouter(prefix="/profiles/{profile_id}/chart", tags=["charts"])
 
 
+def _to_chart_response(chart: Chart) -> ChartResponse:
+    planets = chart.planetary_data.get("planets", [])
+    return ChartResponse(
+        id=chart.id,
+        birth_profile_id=chart.birth_profile_id,
+        lagna=chart.lagna,
+        rashi=chart.rashi,
+        ayanamsa=chart.ayanamsa,
+        house_system=chart.house_system,
+        calculation_provider=chart.calculation_provider,
+        planetary_data=chart.planetary_data,
+        life_areas=build_life_areas(chart.lagna, chart.rashi, planets),
+        created_at=chart.created_at,
+    )
+
+
 @router.post("", response_model=ChartResponse, status_code=status.HTTP_201_CREATED)
 def generate_chart(
     profile_id: uuid.UUID,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> Chart:
+) -> ChartResponse:
     profile = get_owned_profile(db, profile_id, current_user)
 
     provider = get_astrology_provider()
@@ -46,7 +63,7 @@ def generate_chart(
     db.add(chart)
     db.commit()
     db.refresh(chart)
-    return chart
+    return _to_chart_response(chart)
 
 
 @router.get("", response_model=ChartResponse)
@@ -54,7 +71,7 @@ def get_latest_chart(
     profile_id: uuid.UUID,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> Chart:
+) -> ChartResponse:
     profile = get_owned_profile(db, profile_id, current_user)
     chart = (
         db.query(Chart)
@@ -64,4 +81,4 @@ def get_latest_chart(
     )
     if chart is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No chart generated for this profile yet")
-    return chart
+    return _to_chart_response(chart)

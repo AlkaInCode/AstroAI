@@ -81,7 +81,7 @@ export default function Dashboard() {
 
       <div className="mt-6">
         <h2 className="mb-4 px-1 font-semibold text-brand-slate">Your Chart, In Plain Words</h2>
-        <LifeAreaCards chart={chart} />
+        <LifeAreaCards areas={chart.life_areas} />
       </div>
 
       <div className="mt-6">

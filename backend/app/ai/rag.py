@@ -38,12 +38,54 @@ _PLACEHOLDER_KNOWLEDGE = [
         "source": "Placeholder Phase-1 knowledge note",
     },
     {
+        "topic": "Sun",
+        "content": (
+            "The Sun (Surya) represents identity, willpower, authority and vitality. "
+            "As a house lord, it points to where a person seeks recognition and asserts themselves."
+        ),
+        "source": "Placeholder Phase-1 knowledge note",
+    },
+    {
+        "topic": "Mars",
+        "content": (
+            "Mars (Mangal) represents courage, drive, action and assertiveness. "
+            "As a house lord, it shows where a person acts decisively and where conflict may arise."
+        ),
+        "source": "Placeholder Phase-1 knowledge note",
+    },
+    {
+        "topic": "Mercury",
+        "content": (
+            "Mercury (Budha) represents intellect, communication and analytical thinking. "
+            "As a house lord, it points to where a person reasons things through before acting."
+        ),
+        "source": "Placeholder Phase-1 knowledge note",
+    },
+    {
+        "topic": "Venus",
+        "content": (
+            "Venus (Shukra) represents love, beauty, harmony and material comfort. "
+            "As a house lord, it shows where a person seeks pleasure, connection and refinement."
+        ),
+        "source": "Placeholder Phase-1 knowledge note",
+    },
+    {
         "topic": "seventh house",
         "content": (
             "The 7th house traditionally governs marriage, partnerships and "
             "one-to-one relationships, including business partnerships."
         ),
         "source": "Placeholder Phase-1 knowledge note",
+    },
+    {
+        "topic": "Lagna",
+        "content": (
+            "The Lagna (Ascendant) is the zodiac sign rising on the eastern horizon at "
+            "the moment of birth. It sets the chart's overall frame of reference -- "
+            "house 1 -- and its ruling planet, the Lagna lord, is often read as the "
+            "single most important indicator of a person's general life direction."
+        ),
+        "source": "Placeholder Phase-2 knowledge note",
     },
     {
         "topic": "tenth house",
@@ -110,14 +152,16 @@ _PLACEHOLDER_KNOWLEDGE = [
 ]
 
 
-def search_astrology_knowledge(query: str, top_k: int = 3) -> list[dict]:
+def search_astrology_knowledge(query: str, top_k: int = 3, allow_fallback: bool = True) -> list[dict]:
     query_lower = query.lower()
     scored = [
         entry
         for entry in _PLACEHOLDER_KNOWLEDGE
         if entry["topic"].lower() in query_lower or query_lower in entry["topic"].lower()
     ]
-    return scored[:top_k] if scored else _PLACEHOLDER_KNOWLEDGE[:top_k]
+    if scored:
+        return scored[:top_k]
+    return _PLACEHOLDER_KNOWLEDGE[:top_k] if allow_fallback else []
 
 
 def search_numerology_knowledge(query: str, top_k: int = 3) -> list[dict]:

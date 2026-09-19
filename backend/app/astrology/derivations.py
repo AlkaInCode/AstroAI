@@ -44,6 +44,23 @@ _EXALTATION_SIGN = {
     "Ketu": "Sagittarius",
 }
 
+# Classical (7-planet, Parashari) sign rulerships -- Rahu/Ketu are not
+# assigned as sign lords in this convention.
+SIGN_RULER = {
+    "Aries": "Mars",
+    "Taurus": "Venus",
+    "Gemini": "Mercury",
+    "Cancer": "Moon",
+    "Leo": "Sun",
+    "Virgo": "Mercury",
+    "Libra": "Venus",
+    "Scorpio": "Mars",
+    "Sagittarius": "Jupiter",
+    "Capricorn": "Saturn",
+    "Aquarius": "Saturn",
+    "Pisces": "Jupiter",
+}
+
 _MOVABLE_SIGNS = {"Aries", "Cancer", "Libra", "Capricorn"}
 _FIXED_SIGNS = {"Taurus", "Leo", "Scorpio", "Aquarius"}
 # Dual/mutable signs are the remaining four (Gemini, Virgo, Sagittarius, Pisces).
@@ -71,6 +88,15 @@ _SPECIAL_ASPECTS = {
 
 def sign_index(sign: str) -> int:
     return SIGNS.index(sign)
+
+
+def house_sign(lagna_sign: str, house: int) -> str:
+    """The sign occupying a given whole-sign house, counting the Lagna sign as house 1."""
+    return SIGNS[(sign_index(lagna_sign) + house - 1) % 12]
+
+
+def house_lord(lagna_sign: str, house: int) -> str:
+    return SIGN_RULER[house_sign(lagna_sign, house)]
 
 
 def absolute_longitude(sign: str, degree_in_sign: float) -> float:
