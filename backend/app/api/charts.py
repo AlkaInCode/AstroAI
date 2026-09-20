@@ -32,14 +32,12 @@ def _to_chart_response(chart: Chart) -> ChartResponse:
     )
 
 
-@router.post("", response_model=ChartResponse, status_code=status.HTTP_201_CREATED)
-def generate_chart(
-    profile_id: uuid.UUID,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-) -> ChartResponse:
-    profile = get_owned_profile(db, profile_id, current_user)
-
+def generate_chart_for_profile(db: Session, profile) -> Chart:
+    """Calls the astrology provider (the expensive, rate-limited part once a real
+    provider like Prokerala is wired in) and persists the result. This is the one
+    place a chart is ever fetched from the provider -- every other read comes from
+    the `charts` table, which acts as the cache. Callers are responsible for
+    deleting any stale chart rows first when birth details change."""
     provider = get_astrology_provider()
     result = provider.calculate_chart(
         BirthInput(
@@ -65,6 +63,17 @@ def generate_chart(
     db.add(chart)
     db.commit()
     db.refresh(chart)
+    return chart
+
+
+@router.post("", response_model=ChartResponse, status_code=status.HTTP_201_CREATED)
+def generate_chart(
+    profile_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ChartResponse:
+    profile = get_owned_profile(db, profile_id, current_user)
+    chart = generate_chart_for_profile(db, profile)
     return _to_chart_response(chart)
 
 

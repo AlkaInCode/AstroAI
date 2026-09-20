@@ -49,14 +49,7 @@ def _to_response(result: NumerologyResult) -> NumerologyResponse:
     )
 
 
-@router.post("", response_model=NumerologyResponse, status_code=status.HTTP_201_CREATED)
-def generate_numerology(
-    profile_id: uuid.UUID,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-) -> NumerologyResponse:
-    profile = get_owned_profile(db, profile_id, current_user)
-
+def generate_numerology_for_profile(db: Session, profile) -> NumerologyResult:
     computed = compute_numerology(profile.full_name, profile.dob)
     result = NumerologyResult(
         birth_profile_id=profile.id,
@@ -70,6 +63,17 @@ def generate_numerology(
     db.add(result)
     db.commit()
     db.refresh(result)
+    return result
+
+
+@router.post("", response_model=NumerologyResponse, status_code=status.HTTP_201_CREATED)
+def generate_numerology(
+    profile_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> NumerologyResponse:
+    profile = get_owned_profile(db, profile_id, current_user)
+    result = generate_numerology_for_profile(db, profile)
     return _to_response(result)
 
 
