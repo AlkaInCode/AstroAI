@@ -52,5 +52,8 @@ alembic/        # schema migrations
 
 ## Swapping providers
 
-- Astrology: set `ASTROLOGY_PROVIDER=prokerala` and fill in `PROKERALA_CLIENT_ID`/`SECRET` once evaluated. Add a new file under `app/astrology/providers/` and register it in `app/astrology/factory.py` to try a different provider (e.g. VedAstro).
+- Astrology: `ASTROLOGY_PROVIDER=mock` (default), `astroengine`, or `prokerala`.
+  - `astroengine` calls a self-hosted [AstroEngine](https://github.com/thebrownhuman/AstroEngine) instance (no API key) -- set `ASTROENGINE_BASE_URL` to where it's running (LAN IP, or `host.docker.internal:8000` when the backend itself runs in Docker and AstroEngine runs on the host machine).
+  - `prokerala` needs `PROKERALA_CLIENT_ID`/`SECRET` once evaluated.
+  - Add a new file under `app/astrology/providers/` and register it in `app/astrology/factory.py` to try a different provider.
 - LLM: set `LLM_PROVIDER` / `LLM_MODEL` / `LLM_API_KEY`.

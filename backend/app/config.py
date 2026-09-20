@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     astrology_provider: str = "mock"
     prokerala_client_id: str = ""
     prokerala_client_secret: str = ""
+    # Self-hosted AstroEngine instance (LAN-only, no API key) -- see app.astrology.providers.astroengine_provider
+    astroengine_base_url: str = "http://192.168.68.114:8000"
 
     geocoding_provider: str = "mock"
     geocoding_api_key: str = ""
